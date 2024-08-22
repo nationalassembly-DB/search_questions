@@ -15,12 +15,13 @@ def write_excel(wb, input_path, output_path):
         ws = wb.active
         for root, _, files in os.walk(input_path):
             for file in files:
-                file_path = os.path.join(root, file)
-                bookmark_list = extract_bookmark(file_path)
-                last_row = ws.max_row
-                for idx, item in enumerate(bookmark_list):
-                    _, title, _, _ = item
-                    ws.cell(row=last_row + idx + 1, column=9, value=title)
+                if file.lower().endswith('.pdf'):
+                    file_path = os.path.join(root, file)
+                    bookmark_list = extract_bookmark(file_path)
+                    last_row = ws.max_row
+                    for idx, item in enumerate(bookmark_list):
+                        _, title, _, _ = item
+                        ws.cell(row=last_row + idx + 1, column=9, value=title)
         wb.save(output_path)
     except Exception as e:
         logging(e, input_path, output_path)
