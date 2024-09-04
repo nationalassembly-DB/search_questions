@@ -14,7 +14,7 @@ def main():
     input_path = input("PDF파일이 존재하는 폴더 경로를 입력하세요 : (종료는 0을 입력)").strip()
 
     if input_path == '0':
-        return
+        return 0
 
     output_path = input("저장할 엑셀 파일 경로를 입력하세요 : ").strip()
 
