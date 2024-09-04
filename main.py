@@ -4,6 +4,8 @@ from module.create_excel import write_excel, load_excel
 
 
 def main():
+    print("\n>>>>>>주질의 추출기<<<<<<\n")
+    print("-"*24)
     input_path = input("PDF파일이 존재하는 폴더 경로를 입력하세요 : ").strip()
     output_path = input("저장할 엑셀 파일 경로를 입력하세요 : ").strip()
 
