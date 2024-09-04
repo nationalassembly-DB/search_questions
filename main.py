@@ -20,6 +20,9 @@ def main():
     if not str(output_path).endswith('.xlsx'):
         output_path = output_path + '.xlsx'
     write_excel(load_excel(output_path), input_path, output_path)
+    print("모든 작업이 완료되었습니다")
+
+    return main
 
 
 if __name__ == "__main__":
