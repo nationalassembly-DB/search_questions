@@ -1,9 +1,14 @@
+"""
+main 함수. 주질의를 추출합니다.
+"""
+
 import os
 
 from module.create_excel import write_excel, load_excel
 
 
 def main():
+    """주질의를 추출합니다"""
     print("\n>>>>>>주질의 추출기<<<<<<\n")
     print("-"*24)
     input_path = input("PDF파일이 존재하는 폴더 경로를 입력하세요 : ").strip()

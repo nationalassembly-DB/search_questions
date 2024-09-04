@@ -1,39 +1,40 @@
+"""
+입력받은 북마크 리스트를 통해 엑셀 파일을 만듭니다. 북마크의 단계를 기준으로 추출합니다
+"""
+
+import os
+from natsort import natsorted
+
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import PatternFill
 from module.create_log import logging
 from module.extract_bookmark import extract_bookmark
 
 
-import os
-from natsort import natsorted
-
-
 def write_excel(wb, input_path, output_path):
-    try:
-        ws = wb.active
-        for root, _, files in os.walk(input_path):
-            for file in natsorted(files):
-                if file.lower().endswith('.pdf'):
-                    file_path = os.path.join(root, file)
-                    bookmark_list = extract_bookmark(file_path)
-                    last_row = ws.max_row
-                    tmp = 1
-                    for item in bookmark_list:
-                        if len(item) > 1:
-                            if item['level'] == 3:
-                                cnt = last_row + tmp
-                                ws.cell(row=cnt, column=11, value=file)
-                                ws.cell(row=cnt, column=6,
-                                        value=item['parent']['title'])
-                                ws.cell(row=cnt, column=9, value=item['title'])
-                                tmp += 1
+    """정리된 북마크 리스트를 통해 엑셀로 변환합니다. """
+    ws = wb.active
+    for root, _, files in os.walk(input_path):
+        for file in natsorted(files):
+            if file.lower().endswith('.pdf'):
+                file_path = os.path.join(root, file)
+                bookmark_list = extract_bookmark(file_path)
+                last_row = ws.max_row
+                tmp = 1
+                for item in bookmark_list:
+                    if len(item) > 1 and item['level'] == 3:
+                        cnt = last_row + tmp
+                        ws.cell(row=cnt, column=11, value=file)
+                        ws.cell(row=cnt, column=6,
+                                value=item['parent']['title'])
+                        ws.cell(row=cnt, column=9, value=item['title'])
+                        tmp += 1
 
-        wb.save(output_path)
-    except Exception as e:  # pylint: disable=W0703
-        logging(e, input_path, output_path)
+    wb.save(output_path)
 
 
 def has_header(wb, output_path):
+    """엑셀 header가 존재하는지 확인합니다. 존재하지 않을 경우 새로 생성합니다"""
     ws = wb.active
     first_row = ws[1]
     header_exists = any(cell.value for cell in first_row)
@@ -52,6 +53,7 @@ def has_header(wb, output_path):
 
 
 def load_excel(output_path):
+    """엑셀을 불러옵니다. 파일이 없는 경우 새로 생성됩니다"""
     if os.path.exists(output_path):
         wb = load_workbook(output_path)
     else:
