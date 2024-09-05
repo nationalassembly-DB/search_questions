@@ -17,13 +17,27 @@ def write_excel(wb, input_path, output_path):
     for root, _, files in os.walk(input_path):
         for file in natsorted(files):
             if file.lower().endswith('.pdf'):
+                blank = str(os.path.basename(input_path)).find(' ')
+                under_bar = str(os.path.basename(input_path)).find('_')
+                if blank != -1 and under_bar != -1:
+                    cmt = str(os.path.basename(input_path))[blank+1:under_bar]
+                elif blank != -1 and under_bar == -1:
+                    cmt = str(os.path.basename(input_path))[blank+1:]
+                else:
+                    cmt = str(os.path.basename(input_path))
                 file_path = os.path.join(root, file)
+                relative_path = os.path.relpath(
+                    file_path, os.path.dirname(input_path))
+
                 bookmark_list = extract_bookmark(file_path)
                 last_row = ws.max_row
                 tmp = 1
                 for item in bookmark_list:
                     if len(item) > 1 and item['level'] == 3:
                         cnt = last_row + tmp
+                        ws.cell(row=cnt, column=2,
+                                value=relative_path.split(os.sep)[1])
+                        ws.cell(row=cnt, column=4, value=cmt)
                         ws.cell(row=cnt, column=11, value=file)
                         ws.cell(row=cnt, column=6,
                                 value=item['parent']['title'])
