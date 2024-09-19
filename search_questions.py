@@ -23,7 +23,10 @@ def main():
         print("입력 폴더의 경로를 다시 한번 확인하세요")
         return main()
 
-    write_excel(load_excel(output_path), input_path, output_path)
+    bookmark_level = input("추출할 북마크 LEVEL을 입력하세요 : ")
+
+    write_excel(load_excel(output_path), input_path,
+                output_path, bookmark_level)
     print(f"{output_path}에 주질의 목록이 생성되었습니다.")
     print("\n~~~모든 작업이 완료되었습니다~~~")
 

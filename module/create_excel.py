@@ -11,7 +11,7 @@ from module.create_log import logging
 from module.extract_bookmark import extract_bookmark
 
 
-def write_excel(wb, input_path, output_path):
+def write_excel(wb, input_path, output_path, level):
     """정리된 북마크 리스트를 통해 엑셀로 변환합니다. """
     ws = wb.active
     for root, _, files in os.walk(input_path):
@@ -29,7 +29,7 @@ def write_excel(wb, input_path, output_path):
                 last_row = ws.max_row
                 tmp = 1
                 for item in extract_bookmark(file_path):
-                    if len(item) > 1 and item['level'] == 3:
+                    if len(item) > 1 and item['level'] == level:
                         cnt = last_row + tmp
                         ws.cell(row=cnt, column=2,
                                 value=os.path.relpath(
