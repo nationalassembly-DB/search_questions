@@ -661,20 +661,21 @@ def write_excel(wb, input_path, output_path, book_level):  # pylint: disable=R09
                 org = ""
 
             file_path = os.path.join(root, file)
+            last_row = ws.max_row
             tmp = 1
             for item in extract_bookmark(file_path):
                 if len(item) > 1 and item['level'] == book_level:
-                    ws.cell(row=ws.max_row + tmp, column=2, value=org)
-                    ws.cell(row=ws.max_row + tmp, column=3,
+                    ws.cell(row=last_row + tmp, column=2, value=org)
+                    ws.cell(row=last_row + tmp, column=3,
                             value=organization_dict[org] if org in organization_dict else None)
-                    ws.cell(row=ws.max_row + tmp, column=4, value=cmt)
-                    ws.cell(row=ws.max_row + tmp, columm=5,
+                    ws.cell(row=last_row + tmp, column=4, value=cmt)
+                    ws.cell(row=last_row + tmp, column=5,
                             value=committee_dict[cmt] if cmt in committee_dict else None)
-                    ws.cell(row=ws.max_row + tmp, column=11, value=file)
+                    ws.cell(row=last_row + tmp, column=11, value=file)
                     if book_level > 1:
-                        ws.cell(row=ws.max_row + tmp, column=6,
+                        ws.cell(row=last_row + tmp, column=6,
                                 value=item['parent']['title'])
-                    ws.cell(row=ws.max_row + tmp, column=9,
+                    ws.cell(row=last_row + tmp, column=9,
                             value=item['title'])
                     tmp += 1
 
