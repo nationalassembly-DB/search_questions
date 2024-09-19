@@ -30,15 +30,15 @@ def write_excel(wb, input_path, output_path, level):
                 tmp = 1
                 for item in extract_bookmark(file_path):
                     if len(item) > 1 and item['level'] == level:
-                        cnt = last_row + tmp
-                        ws.cell(row=cnt, column=2,
+                        ws.cell(row=last_row + tmp, column=2,
                                 value=os.path.relpath(
                                     file_path, os.path.dirname(input_path)).split(os.sep)[1])
-                        ws.cell(row=cnt, column=4, value=cmt)
-                        ws.cell(row=cnt, column=11, value=file)
-                        ws.cell(row=cnt, column=6,
+                        ws.cell(row=last_row + tmp, column=4, value=cmt)
+                        ws.cell(row=last_row + tmp, column=11, value=file)
+                        ws.cell(row=last_row + tmp, column=6,
                                 value=item['parent']['title'])
-                        ws.cell(row=cnt, column=9, value=item['title'])
+                        ws.cell(row=last_row + tmp, column=9,
+                                value=item['title'])
                         tmp += 1
 
     wb.save(output_path)
