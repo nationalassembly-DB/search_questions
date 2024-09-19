@@ -37,7 +37,7 @@ def write_excel(wb, input_path, output_path, book_level):
                         ws.cell(row=last_row + tmp, column=11, value=file)
                         if book_level > 1:
                             ws.cell(row=last_row + tmp, column=6,
-                                    alue=item['parent']['title'])
+                                    value=item['parent']['title'])
                         ws.cell(row=last_row + tmp, column=9,
                                 value=item['title'])
                         tmp += 1
