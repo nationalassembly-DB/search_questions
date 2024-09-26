@@ -9,6 +9,7 @@ from module.create_excel import write_excel, load_excel
 
 def main():
     """주질의를 추출합니다"""
+    print("-"*24)
     print("\n>>>>>>주질의 추출기<<<<<<\n")
     print("-"*24)
     input_path = input("PDF파일이 존재하는 폴더 경로를 입력하세요(종료는 0을 입력) : ").strip()
